@@ -1,19 +1,17 @@
 package com.hrishikeshmishra.compiler;
 
+import com.hrishikeshmishra.compiler.exceptions.InvalidExpressionException;
 import com.hrishikeshmishra.compiler.exceptions.InvalidTokenException;
-import com.hrishikeshmishra.compiler.tokens.Token;
-import com.hrishikeshmishra.compiler.tokens.Tokenizer;
-
-import java.util.List;
 
 public class Main {
 
-    public static void main(String[] args) throws InvalidTokenException {
-        Tokenizer tokenizer = new Tokenizer();
+    public static void main(String[] args) throws InvalidTokenException, InvalidExpressionException {
 
-        List<Token> parse = tokenizer.parse("1+  2 + 3 * 3 + ( 2 * 4) ");
+        String exp = "(1*2)-4+5)";
+        ArithmeticExpressionProcessor arithmeticExpressionProcessor = new ArithmeticExpressionProcessor();
+        int output = arithmeticExpressionProcessor.process(exp);
 
-        System.out.println(parse);
+        System.out.println(output);
     }
 
 }

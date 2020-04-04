@@ -7,6 +7,11 @@ public class PlusToken extends Token {
     }
 
     @Override
+    public Object getValue() {
+        return null;
+    }
+
+    @Override
     public String toString() {
         return "+";
     }

@@ -6,6 +6,10 @@ public class StartParenthesesToken extends Token {
         super(TokenType.START_PARENTHESES);
     }
 
+    @Override
+    public Object getValue() {
+        return null;
+    }
 
     @Override
     public String toString() {

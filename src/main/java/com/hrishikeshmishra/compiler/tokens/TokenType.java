@@ -1,12 +1,24 @@
 package com.hrishikeshmishra.compiler.tokens;
 
 public enum TokenType {
-    INTEGER,
-    PLUS,
-    MINUS,
-    DIV,
-    MULTI,
-    START_PARENTHESES,
-    END_PARENTHESES,
-    WHITESPACE
+
+    INTEGER("digit"),
+    PLUS("+"),
+    MINUS("-"),
+    DIV("/"),
+    MULTI("*"),
+    START_PARENTHESES("("),
+    END_PARENTHESES(")"),
+    WHITESPACE("whitespace");
+
+    private final String value;
+
+    TokenType(String value) {
+        this.value = value;
+    }
+
+    @Override
+    public String toString() {
+        return value;
+    }
 }

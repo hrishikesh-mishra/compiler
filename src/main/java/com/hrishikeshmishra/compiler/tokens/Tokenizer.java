@@ -15,19 +15,19 @@ public class Tokenizer {
     private static final char END_PARENTHESES = ')';
     private static final String INVALID_TOKEN_EXCEPTION_MSG = "Invalid Token: '%c' at position: '%d'";
 
-    public List<Token> parse(String text) throws InvalidTokenException {
+    public List<Token> parse(String expression) throws InvalidTokenException {
         List<Token> tokens = new ArrayList<>();
 
         int index = 0;
-        int strLength = text.length();
+        int strLength = expression.length();
 
-        while (index < text.length()) {
-            char c = text.charAt(index);
+        while (index < expression.length()) {
+            char c = expression.charAt(index);
 
             if (Character.isDigit(c)) {
-                index = parseDigits(text, tokens, index, strLength);
+                index = parseDigits(expression, tokens, index, strLength);
             } else if (Character.isWhitespace(c)) {
-                index = parseWhiteSpaces(text, tokens, index, strLength);
+                index = parseWhiteSpaces(expression, tokens, index, strLength);
             } else if (c == PLUS) {
                 tokens.add(new PlusToken());
                 index++;
@@ -72,12 +72,13 @@ public class Tokenizer {
     private int parseWhiteSpaces(String text, List<Token> tokens, int index, int strLength) {
         int startPosition = index++;
 
-        while (index < strLength && Character.isDigit(text.charAt(index))) {
+        while (index < strLength && Character.isWhitespace(text.charAt(index))) {
             index++;
         }
 
         String token = text.substring(startPosition, index);
-        tokens.add(new WhiteSpaceToken(token));
+        /** Ignoring whitespace token for now **/
+        //tokens.add(new WhiteSpaceToken(token));
         return index;
     }
 

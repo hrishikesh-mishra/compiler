@@ -10,6 +10,11 @@ public class IntegerToken extends Token {
     }
 
     @Override
+    public Object getValue() {
+        return value;
+    }
+
+    @Override
     public String toString() {
         return value.toString();
     }

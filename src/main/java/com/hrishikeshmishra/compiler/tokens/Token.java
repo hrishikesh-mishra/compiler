@@ -10,4 +10,6 @@ public abstract class Token {
     public TokenType getType() {
         return type;
     }
+
+    public abstract Object getValue();
 }

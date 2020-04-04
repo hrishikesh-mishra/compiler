@@ -6,6 +6,10 @@ public class MultiplyToken extends Token {
         super(TokenType.MULTI);
     }
 
+    @Override
+    public Object getValue() {
+        return null;
+    }
 
     @Override
     public String toString() {
