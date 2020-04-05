@@ -33,15 +33,15 @@ public class Parser {
             "Expression at position: %d and expected token was: %s";
 
     private final List<Token<?>> tokens;
-    private final Tokenizer tokenizer;
-
     private int position;
 
     public Parser(String expression) throws InvalidTokenException {
-        this.tokenizer = new Tokenizer();
+        Tokenizer tokenizer = new Tokenizer();
         this.tokens = tokenizer.parse(expression);
+
         this.position = 0;
     }
+
 
     public Expression parse() throws InvalidTokenException {
         return parseExpression();

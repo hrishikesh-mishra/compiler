@@ -1,9 +1,9 @@
-# Arithmetic Compiler
+# Basic Arithmetic Compiler
 
 This compiler goes through various stages: 
-- Tokenization
-- Parser (and creating Abstract Syntax Tree) 
-- Evaluator
+- [Tokenization](https://github.com/hrishikesh-mishra/compiler/blob/dev/src/main/java/com/hrishikeshmishra/compiler/tokens/Tokenizer.java, "Tokenization")
+- [Parser (and creating Abstract Syntax Tree)](https://github.com/hrishikesh-mishra/compiler/blob/dev/src/main/java/com/hrishikeshmishra/compiler/parsers/Parser.java, "Parser") 
+- [Evaluator](https://github.com/hrishikesh-mishra/compiler/blob/dev/src/main/java/com/hrishikeshmishra/compiler/evaluators/ArithmeticEvaluator.java "Evaluator")
 
 
 ## Tokenization
@@ -12,10 +12,10 @@ It creates the tokens from given string. This is limited to following tokens:
 - Arithmetic Operators (+, -, * and /)
 - Parentheses 
 - Whitespaces 
+- Negative Unary operator (-)
 
 ## Parser 
-This uses **Recursive Descent Parsing**. This is one the top down parse without backtracking.   
-The reason to choose the parse is easily to understand and implement.
+This uses **Recursive Descent Parsing**. This is one the top down parse without backtracking. The reason to choose the parse is easily to understand and implement.
 
 The arithmetic CFG which used in implementation is:  
 ```
@@ -48,9 +48,12 @@ The evaluator traverse the AST produced by the Parser and evaluated the value. I
 
 
 ## Assumptions 
-- Allowed binary operator: +, -, * and /.
+- Allowed binary operator: +, -, * and / and unary negative operator -.
 - Limited to integer only but the result of some operation be overflow. 
 
+
+## Low Level Design (LLD)
+![](images/class-diagram.png)
 
 ## How to run 
 ```shell script
@@ -61,9 +64,10 @@ mvn clean install
 sh run.sh "<Your Arithmetic Expression >"
 
 #Example 
-sh run.sh "-(1) * 2 * (1+3)
+sh run.sh "-(1) * 2 * (1+3)"
 
 #Output
+
 Debugging Expression Tree:  {"NegativeExpression": {"type" : "NEGATIVE", "expression" : {"BinaryExpression" : {"type" : "BINARY", "left" : {"BinaryExpression" : {"type" : "BINARY", "left" : {"ParenthesesExpression" : { "expression" : {"NumberExpression" : {"type" : "NUMBER", "token": "1"}}}}, "operator" :"*", "right" : {"NumberExpression" : {"type" : "NUMBER", "token": "2"}}}}, "operator" :"*", "right" : {"ParenthesesExpression" : { "expression" : {"BinaryExpression" : {"type" : "BINARY", "left" : {"NumberExpression" : {"type" : "NUMBER", "token": "1"}}, "operator" :"+", "right" : {"NumberExpression" : {"type" : "NUMBER", "token": "3"}}}}}}}}}} 
 Give expression: -(1) * 2 * (1+3)  = -8 
 ```

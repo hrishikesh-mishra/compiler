@@ -49,7 +49,7 @@ public class ArithmeticEvaluator {
     }
 
     private int evaluateNumberExpression(NumberExpression node) {
-        return node.getToken().getValue();
+        return node.getValue();
     }
 
     private int evaluateBinaryExpression(BinaryExpression node) throws InvalidExpressionException {

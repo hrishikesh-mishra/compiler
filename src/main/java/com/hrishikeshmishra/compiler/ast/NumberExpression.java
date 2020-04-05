@@ -11,8 +11,8 @@ public class NumberExpression extends Expression {
         this.token = token;
     }
 
-    public Token<Integer> getToken() {
-        return token;
+    public Integer getValue() {
+        return token.getValue();
     }
 
     @Override
