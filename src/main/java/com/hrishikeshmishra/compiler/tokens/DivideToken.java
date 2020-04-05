@@ -1,14 +1,9 @@
 package com.hrishikeshmishra.compiler.tokens;
 
-public class DivideToken extends Token {
+public class DivideToken extends Token<Void> {
 
     public DivideToken() {
-        super(TokenType.DIV);
-    }
-
-    @Override
-    public Object getValue() {
-        return null;
+        super(TokenType.DIV, null);
     }
 
     @Override

@@ -4,13 +4,13 @@ import com.hrishikeshmishra.compiler.tokens.Token;
 
 public class BinaryExpression extends Expression {
 
-    private final ExpressionType type = ExpressionType.BINARY;
-
     private final Expression left;
-    private final Token operator;
+    private final Token<?> operator;
     private final Expression right;
 
-    public BinaryExpression(Expression left, Token operator, Expression right) {
+    public BinaryExpression(Expression left, Token<?> operator, Expression right) {
+        super(ExpressionType.BINARY);
+
         this.left = left;
         this.operator = operator;
         this.right = right;
@@ -20,17 +20,12 @@ public class BinaryExpression extends Expression {
         return left;
     }
 
-    public Token getOperator() {
+    public Token<?> getOperator() {
         return operator;
     }
 
     public Expression getRight() {
         return right;
-    }
-
-    @Override
-    public ExpressionType getType() {
-        return type;
     }
 
     @Override

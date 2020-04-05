@@ -15,8 +15,8 @@ public class Tokenizer {
     private static final char END_PARENTHESES = ')';
     private static final String INVALID_TOKEN_EXCEPTION_MSG = "Invalid Token: '%c' at position: '%d'";
 
-    public List<Token> parse(String expression) throws InvalidTokenException {
-        List<Token> tokens = new ArrayList<>();
+    public List<Token<?>> parse(String expression) throws InvalidTokenException {
+        List<Token<?>> tokens = new ArrayList<>();
 
         int index = 0;
         int strLength = expression.length();
@@ -24,6 +24,7 @@ public class Tokenizer {
         while (index < expression.length()) {
             char c = expression.charAt(index);
 
+            /** TODO: Delegate tokenization through DP when number of token increases.  **/
             if (Character.isDigit(c)) {
                 index = parseDigits(expression, tokens, index, strLength);
             } else if (Character.isWhitespace(c)) {
@@ -54,7 +55,7 @@ public class Tokenizer {
         return tokens;
     }
 
-    private int parseDigits(String text, List<Token> tokens, int index, int strLength) {
+    private int parseDigits(String text, List<Token<?>> tokens, int index, int strLength) {
         int startPosition = index++;
 
         while (index < strLength && Character.isDigit(text.charAt(index))) {
@@ -69,7 +70,7 @@ public class Tokenizer {
         return index;
     }
 
-    private int parseWhiteSpaces(String text, List<Token> tokens, int index, int strLength) {
+    private int parseWhiteSpaces(String text, List<Token<?>> tokens, int index, int strLength) {
         int startPosition = index++;
 
         while (index < strLength && Character.isWhitespace(text.charAt(index))) {

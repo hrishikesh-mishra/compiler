@@ -7,11 +7,17 @@ public class Main {
 
     public static void main(String[] args) throws InvalidTokenException, InvalidExpressionException {
 
-        String exp = "(1*2)-4+5)";
+        if (args.length < 0) {
+            System.err.println("Please provide expression. ");
+            System.exit(-1);
+        }
+
+        String exp = args[0];
+
         ArithmeticExpressionProcessor arithmeticExpressionProcessor = new ArithmeticExpressionProcessor();
         int output = arithmeticExpressionProcessor.process(exp);
 
-        System.out.println(output);
+        System.out.printf("Give expression: %s  = %d \n", exp, output);
     }
 
 }

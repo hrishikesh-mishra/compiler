@@ -3,12 +3,7 @@ package com.hrishikeshmishra.compiler.tokens;
 public class PlusToken extends Token {
 
     public PlusToken() {
-        super(TokenType.PLUS);
-    }
-
-    @Override
-    public Object getValue() {
-        return null;
+        super(TokenType.PLUS, null);
     }
 
     @Override

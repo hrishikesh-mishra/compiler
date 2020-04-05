@@ -4,22 +4,16 @@ import com.hrishikeshmishra.compiler.tokens.Token;
 
 public class NumberExpression extends Expression {
 
-    private final ExpressionType type = ExpressionType.NUMBER;
-    private final Token token;
+    private final Token<Integer> token;
 
-    public NumberExpression(Token token) {
+    public NumberExpression(Token<Integer> token) {
+        super(ExpressionType.NUMBER);
         this.token = token;
     }
 
-    public Token getToken() {
+    public Token<Integer> getToken() {
         return token;
     }
-
-    @Override
-    public ExpressionType getType() {
-        return type;
-    }
-
 
     @Override
     public String toString() {

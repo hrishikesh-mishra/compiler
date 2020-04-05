@@ -1,12 +1,16 @@
 package com.hrishikeshmishra.compiler.ast;
 
 
-public abstract class Expression implements Node {
+public abstract class Expression {
 
-    private final ExpressionType type = ExpressionType.EXPRESSION;
+    protected final ExpressionType type;
 
-    @Override
+    public Expression(ExpressionType type) {
+        this.type = type;
+    }
+
     public ExpressionType getType() {
         return type;
     }
+
 }

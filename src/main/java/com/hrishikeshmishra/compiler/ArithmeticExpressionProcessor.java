@@ -13,7 +13,8 @@ public class ArithmeticExpressionProcessor {
         Parser parser = new Parser(expressionStr);
         Expression expression = parser.parse();
 
-        System.out.println(expression);
+
+        System.out.printf("\nDebugging Expression Tree:  %s \n", expression);
 
         ArithmeticEvaluator evaluator = new ArithmeticEvaluator();
         return evaluator.evaluate(expression);

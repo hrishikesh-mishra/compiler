@@ -1,10 +1,7 @@
 package com.hrishikeshmishra.compiler.parsers;
 
+import com.hrishikeshmishra.compiler.ast.*;
 import com.hrishikeshmishra.compiler.exceptions.InvalidTokenException;
-import com.hrishikeshmishra.compiler.ast.BinaryExpression;
-import com.hrishikeshmishra.compiler.ast.Expression;
-import com.hrishikeshmishra.compiler.ast.NumberExpression;
-import com.hrishikeshmishra.compiler.ast.ParenthesesExpression;
 import com.hrishikeshmishra.compiler.tokens.Token;
 import com.hrishikeshmishra.compiler.tokens.TokenType;
 import com.hrishikeshmishra.compiler.tokens.Tokenizer;
@@ -17,14 +14,16 @@ import java.util.List;
  *
  * <pre>
  *
- *      Expression -> Term { PlusMinusOperation Term }
+ *      Expression -> [-] Term { PlusMinusOperation Term }
  *      Term ->  Factor { MultiDiv Factor }
  *      Factor ->  (Expression) | Number
  *      PlusMinusOperation  ->  + | -
  *      MultiDiv ->  * | /
  *      Number → 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
  *
- *      Here {} -> present the repetition of zero more times.
+ *      Here,
+ *      {} -> Represent the repetition of zero more times.
+ *      [] -> Represent optional
  *
  * <pre>
  */
@@ -33,7 +32,7 @@ public class Parser {
     private static final String INVALID_TOKEN_EXCEPTION = "Invalid Token " +
             "Expression at position: %d and expected token was: %s";
 
-    private final List<Token> tokens;
+    private final List<Token<?>> tokens;
     private final Tokenizer tokenizer;
 
     private int position;
@@ -49,19 +48,31 @@ public class Parser {
     }
 
     /**
-     * This function is based on following production rule: Expression -> Term { PlusMinusOperation Term }
+     * This function is based on following production rule: Expression -> [-] Term { PlusMinusOperation Term }
      *
      * @return
      * @throws InvalidTokenException
      */
     private Expression parseExpression() throws InvalidTokenException {
+
+        boolean isNegativeNumber = false;
+
+        if (getCurrentToken().getType() == TokenType.MINUS) {
+            isNegativeNumber = true;
+            nextToken();
+        }
+
         Expression left = parseTerm();
+
+        if (isNegativeNumber) {
+            left = new NegativeExpression(left);
+        }
 
         while (!consumedAll() &&
                 (getCurrentToken().getType() == TokenType.PLUS ||
                         getCurrentToken().getType() == TokenType.MINUS)) {
 
-            Token operator = nextToken();
+            Token<?> operator = nextToken();
             Expression right = parseTerm();
             left = new BinaryExpression(left, operator, right);
         }
@@ -82,7 +93,7 @@ public class Parser {
                 (getCurrentToken().getType() == TokenType.MULTI ||
                         getCurrentToken().getType() == TokenType.DIV)) {
 
-            Token operator = nextToken();
+            Token<?> operator = nextToken();
             Expression right = parseFactor();
             left = new BinaryExpression(left, operator, right);
         }
@@ -99,13 +110,13 @@ public class Parser {
     private Expression parseFactor() throws InvalidTokenException {
 
         if (!consumedAll() && getCurrentToken().getType() == TokenType.START_PARENTHESES) {
-            Token startToken = nextToken();
+            Token<?> startToken = nextToken();
             Expression expression = parseExpression();
-            Token endToken = match(TokenType.END_PARENTHESES);
+            Token<?> endToken = match(TokenType.END_PARENTHESES);
             return new ParenthesesExpression(startToken, expression, endToken);
         }
 
-        Token token = match(TokenType.INTEGER);
+        Token<Integer> token = (Token<Integer>) match(TokenType.INTEGER);
         return new NumberExpression(token);
     }
 
@@ -113,17 +124,17 @@ public class Parser {
         return position >= tokens.size();
     }
 
-    private Token nextToken() {
-        Token token = tokens.get(position);
+    private Token<?> nextToken() {
+        Token<?> token = tokens.get(position);
         position++;
         return token;
     }
 
-    private Token getCurrentToken() {
+    private Token<?> getCurrentToken() {
         return tokens.get(position);
     }
 
-    private Token match(TokenType type) throws InvalidTokenException {
+    private Token<?> match(TokenType type) throws InvalidTokenException {
         if (!consumedAll() && getCurrentToken().getType() == type) {
             return nextToken();
         }

@@ -1,15 +1,21 @@
 package com.hrishikeshmishra.compiler.tokens;
 
-public abstract class Token {
-    private final TokenType type;
+public abstract class Token<T> {
 
-    public Token(TokenType type) {
+    private final TokenType type;
+    private final T value;
+
+    public Token(TokenType type, T value) {
         this.type = type;
+        this.value = value;
     }
 
     public TokenType getType() {
         return type;
     }
 
-    public abstract Object getValue();
+    public T getValue() {
+        return value;
+    }
+
 }

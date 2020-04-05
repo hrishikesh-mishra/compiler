@@ -34,4 +34,35 @@ public class ArithmeticExpressionProcessorTest {
         String str = "1+2+(3+3";
         expressionProcessor.process(str);
     }
+
+    @Test
+    public void testNegativeNumber1() throws InvalidExpressionException, InvalidTokenException {
+        String str = "-1";
+        int output = expressionProcessor.process(str);
+        Assert.assertEquals(-1, output);
+    }
+
+    @Test
+    public void testNegativeNumber2() throws InvalidExpressionException, InvalidTokenException {
+        String str = "-1-5";
+        int output = expressionProcessor.process(str);
+        Assert.assertEquals(-6, output);
+    }
+
+    @Test
+    public void testExpression3() throws InvalidExpressionException, InvalidTokenException {
+        String str = "-( -10 -(20))";
+        int output = expressionProcessor.process(str);
+        Assert.assertEquals(30, output);
+    }
+
+    @Test
+    public void testExpression4() throws InvalidExpressionException, InvalidTokenException {
+        String str = "1 + ( -1 -(1+1))";
+        int output = expressionProcessor.process(str);
+        Assert.assertEquals(-2, output);
+    }
+
+//
+
 }

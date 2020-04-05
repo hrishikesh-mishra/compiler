@@ -1,22 +1,14 @@
 package com.hrishikeshmishra.compiler.tokens;
 
-public class IntegerToken extends Token {
-
-    private final Integer value;
+public class IntegerToken extends Token<Integer> {
 
     public IntegerToken(Integer value) {
-        super(TokenType.INTEGER);
-        this.value = value;
-    }
-
-    @Override
-    public Object getValue() {
-        return value;
+        super(TokenType.INTEGER, value);
     }
 
     @Override
     public String toString() {
-        return value.toString();
+        return getValue().toString();
     }
 
 }

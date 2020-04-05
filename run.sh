@@ -1,0 +1,1 @@
+ java -cp    target/compiler-1.0-SNAPSHOT.jar  com.hrishikeshmishra.compiler.Main "$1"
