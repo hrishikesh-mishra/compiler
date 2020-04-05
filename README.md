@@ -1,8 +1,8 @@
 # Basic Arithmetic Compiler
 
 This compiler goes through various stages: 
-- [Tokenization](https://github.com/hrishikesh-mishra/compiler/blob/dev/src/main/java/com/hrishikeshmishra/compiler/tokens/Tokenizer.java, "Tokenization")
-- [Parser (and creating Abstract Syntax Tree)](https://github.com/hrishikesh-mishra/compiler/blob/dev/src/main/java/com/hrishikeshmishra/compiler/parsers/Parser.java, "Parser") 
+- [Tokenization](https://github.com/hrishikesh-mishra/compiler/blob/dev/src/main/java/com/hrishikeshmishra/compiler/tokens/Tokenizer.java "Tokenization")
+- [Parser (and creating Abstract Syntax Tree)](https://github.com/hrishikesh-mishra/compiler/blob/dev/src/main/java/com/hrishikeshmishra/compiler/parsers/Parser.java "Parser") 
 - [Evaluator](https://github.com/hrishikesh-mishra/compiler/blob/dev/src/main/java/com/hrishikeshmishra/compiler/evaluators/ArithmeticEvaluator.java "Evaluator")
 
 
