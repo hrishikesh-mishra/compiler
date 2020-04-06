@@ -17,7 +17,7 @@ public class Main {
         ArithmeticExpressionProcessor arithmeticExpressionProcessor = new ArithmeticExpressionProcessor();
         int output = arithmeticExpressionProcessor.process(exp);
 
-        System.out.printf("Give expression: %s  = %d \n", exp, output);
+        System.out.printf("Given expression: %s  = %d \n", exp, output);
     }
 
 }
