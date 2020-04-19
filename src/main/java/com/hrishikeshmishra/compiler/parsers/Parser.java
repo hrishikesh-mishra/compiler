@@ -4,7 +4,6 @@ import com.hrishikeshmishra.compiler.ast.*;
 import com.hrishikeshmishra.compiler.exceptions.InvalidTokenException;
 import com.hrishikeshmishra.compiler.tokens.Token;
 import com.hrishikeshmishra.compiler.tokens.TokenType;
-import com.hrishikeshmishra.compiler.tokens.Tokenizer;
 
 import java.util.List;
 
@@ -25,6 +24,7 @@ import java.util.List;
  *      {} -> Represent the repetition of zero more times.
  *      [] -> Represent optional
  *
+ *
  * <pre>
  */
 public class Parser {
@@ -35,9 +35,8 @@ public class Parser {
     private final List<Token<?>> tokens;
     private int position;
 
-    public Parser(String expression) throws InvalidTokenException {
-        Tokenizer tokenizer = new Tokenizer();
-        this.tokens = tokenizer.parse(expression);
+    public Parser(List<Token<?>> tokens) {
+        this.tokens = tokens;
 
         this.position = 0;
     }

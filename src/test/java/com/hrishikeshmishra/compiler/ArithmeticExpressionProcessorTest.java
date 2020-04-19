@@ -63,6 +63,14 @@ public class ArithmeticExpressionProcessorTest {
         Assert.assertEquals(-2, output);
     }
 
-//
+    @Test
+    public  void test111() throws InvalidExpressionException, InvalidTokenException {
+        String x = "  2 * 3  + 7";
+
+        int output = expressionProcessor.process(x);
+        Assert.assertEquals(13, output);
+
+    }
+
 
 }
