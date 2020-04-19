@@ -5,6 +5,7 @@ import com.hrishikeshmishra.compiler.exceptions.InvalidTokenException;
 import com.hrishikeshmishra.compiler.tokens.Token;
 import com.hrishikeshmishra.compiler.tokens.TokenType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,12 +14,15 @@ import java.util.List;
  *
  * <pre>
  *
+ *      Statement -> Variable Assign Expression
  *      Expression -> [-] Term { PlusMinusOperation Term }
  *      Term ->  Factor { MultiDiv Factor }
- *      Factor ->  (Expression) | Number
+ *      Factor ->  (Expression) | Number | Variable
  *      PlusMinusOperation  ->  + | -
  *      MultiDiv ->  * | /
- *      Number → 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9
+ *      Number -> 0 - 9 { 0-9 }
+ *      Variable ->  A-Z | a-z { A-Z| a-z | 0-9 }
+ *      Assign -> =
  *
  *      Here,
  *      {} -> Represent the repetition of zero more times.
@@ -32,18 +36,38 @@ public class Parser {
     private static final String INVALID_TOKEN_EXCEPTION = "Invalid Token " +
             "Expression at position: %d and expected token was: %s";
 
-    private final List<Token<?>> tokens;
+    private final List<List<Token<?>>> tokens;
     private int position;
+    private int lineNumber;
 
-    public Parser(List<Token<?>> tokens) {
+    public Parser(List<List<Token<?>>> tokens) {
         this.tokens = tokens;
-
-        this.position = 0;
     }
 
+    public List<Expression> parse() throws InvalidTokenException {
 
-    public Expression parse() throws InvalidTokenException {
-        return parseExpression();
+        List<Expression> expressions = new ArrayList<>();
+        for (int i = 0; i < tokens.size(); i++) {
+            this.position = 0;
+            expressions.add(parseStatement());
+            this.lineNumber++;
+        }
+
+        return expressions;
+    }
+
+    /**
+     * This function is based on following production rule: Variable Assign Expression
+     *
+     * @return
+     * @throws InvalidTokenException
+     */
+    private Expression parseStatement() throws InvalidTokenException {
+        Token<String> lValue = (Token<String>) match(TokenType.VARIABLE);
+        Token<String> assignment = (Token<String>) match(TokenType.ASSIGNMENT);
+        Expression rValue = parseExpression();
+
+        return new StatementExpression(lValue, rValue);
     }
 
     /**
@@ -101,7 +125,7 @@ public class Parser {
     }
 
     /**
-     * This processor is based on following production rule: Factor ->  (Expression) | Number
+     * This processor is based on following production rule: Factor ->  (Expression) | Number | Variable
      *
      * @return
      * @throws InvalidTokenException
@@ -115,22 +139,27 @@ public class Parser {
             return new ParenthesesExpression(startToken, expression, endToken);
         }
 
+        if (!consumedAll() && getCurrentToken().getType() == TokenType.VARIABLE) {
+            Token<String> token = (Token<String>) match(TokenType.VARIABLE);
+            return new VariableExpression(token);
+        }
+
         Token<Integer> token = (Token<Integer>) match(TokenType.INTEGER);
         return new NumberExpression(token);
     }
 
     private boolean consumedAll() {
-        return position >= tokens.size();
+        return position >= tokens.get(lineNumber).size();
     }
 
     private Token<?> nextToken() {
-        Token<?> token = tokens.get(position);
+        Token<?> token = tokens.get(lineNumber).get(position);
         position++;
         return token;
     }
 
     private Token<?> getCurrentToken() {
-        return tokens.get(position);
+        return tokens.get(lineNumber).get(position);
     }
 
     private Token<?> match(TokenType type) throws InvalidTokenException {

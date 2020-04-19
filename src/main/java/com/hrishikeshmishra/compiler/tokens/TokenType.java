@@ -9,7 +9,10 @@ public enum TokenType {
     MULTI("*"),
     START_PARENTHESES("("),
     END_PARENTHESES(")"),
-    WHITESPACE("whitespace");
+    WHITESPACE("whitespace"),
+    VARIABLE("variable"),
+    ASSIGNMENT("=");
+
 
     private final String value;
 

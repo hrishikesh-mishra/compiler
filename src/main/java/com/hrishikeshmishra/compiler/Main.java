@@ -3,6 +3,9 @@ package com.hrishikeshmishra.compiler;
 import com.hrishikeshmishra.compiler.exceptions.InvalidExpressionException;
 import com.hrishikeshmishra.compiler.exceptions.InvalidTokenException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main {
 
     public static void main(String[] args) throws InvalidTokenException, InvalidExpressionException {
@@ -13,11 +16,22 @@ public class Main {
         }
 
         String exp = args[0];
+        List<String> lines = getLines(exp);
 
         ArithmeticExpressionProcessor arithmeticExpressionProcessor = new ArithmeticExpressionProcessor();
-        int output = arithmeticExpressionProcessor.process(exp);
+        int output = arithmeticExpressionProcessor.process(lines);
 
-        System.out.printf("Given expression: %s  = %d \n", exp, output);
+        System.out.printf("\nGiven expression: %s\nAnd Result = %d \n", exp, output);
     }
 
+    public static List<String> getLines(String expressionsStr) {
+
+        List<String> lines = new ArrayList<>();
+        for (String line : expressionsStr.split(";")) {
+            if (!line.trim().isEmpty()) {
+                lines.add(line.trim());
+            }
+        }
+        return lines;
+    }
 }
