@@ -63,6 +63,7 @@ The evaluator traverse the AST produced by the Parser and evaluated the value. I
 - Allowed binary operator: +, -, * and / and unary negative operator -.
 - Limited to integer only but the result of some operation be overflow.
 - Every line must be a statement with LValue and RValue, where LValue is a variable and RValue is a arithmetic expression.   
+- Multiple statements can be in a line separated by semi-colon (;), System will break it into multiple line.  
 - Program will return last statement value only.
 - Variable is an alphanumeric leading with letter.  
 - Variable must be assigned before using it. 
