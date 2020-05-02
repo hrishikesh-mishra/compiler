@@ -12,17 +12,17 @@ import java.util.List;
 
 public class ArithmeticExpressionProcessor {
 
-    public int process(String expressionStr) throws InvalidTokenException, InvalidExpressionException {
-        Tokenizer tokenizer = new Tokenizer();
-        List<Token<?>> parse = tokenizer.parse(expressionStr);
+    public int process(List<String> lines) throws InvalidTokenException, InvalidExpressionException {
+        Tokenizer tokenizer = new Tokenizer(lines);
+        List<List<Token<?>>> tokens = tokenizer.parse();
 
-        Parser parser = new Parser(parse);
-        Expression expression = parser.parse();
+        Parser parser = new Parser(tokens);
+        List<Expression> expressions = parser.parse();
 
 
-        System.out.printf("\nDebugging Expression Tree:  %s \n", expression);
+        System.out.printf("\nDebugging Expression Tree:  %s \n", expressions);
 
-        ArithmeticEvaluator evaluator = new ArithmeticEvaluator();
-        return evaluator.evaluate(expression);
+        ArithmeticEvaluator evaluator = new ArithmeticEvaluator(expressions);
+        return evaluator.evaluate();
     }
 }

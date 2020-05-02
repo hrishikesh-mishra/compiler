@@ -4,5 +4,7 @@ public enum ExpressionType {
     NEGATIVE,
     NUMBER,
     BINARY,
-    PARENTHESES
+    PARENTHESES,
+    STATEMENT,
+    VARIABLE
 }
